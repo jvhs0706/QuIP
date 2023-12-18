@@ -21,7 +21,7 @@ def get_opt(model):
     torch.nn.init.uniform_ = skip
     torch.nn.init.normal_ = skip
     from transformers import OPTForCausalLM
-    model = OPTForCausalLM.from_pretrained(model, torch_dtype='auto')
+    model = OPTForCausalLM.from_pretrained(model, torch_dtype='auto', local_files_only = True)
     model.seqlen = model.config.max_position_embeddings
     return model
 
@@ -518,7 +518,7 @@ if __name__ == '__main__':
         '--wbits',
         type=int,
         default=16,
-        choices=[2, 3, 4, 16],
+        choices=[1, 2, 3, 4, 16],
         help='#bits to use for quantization; use 16 for evaluating base model.')
     parser.add_argument(
         '--npasses',

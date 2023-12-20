@@ -14,9 +14,9 @@ module load gcc/9.3.0 python/3.10 arrow/11.0.0 nodejs cuda/11.7 cmake protobuf c
 source $HOME/Quantization_ENV/bin/activate
 echo "The Python used is $(which python)"
 
-TRANSFORMERS_CACHE=./model-storage CUDA_VISIBLE_DEVICES=0 python llama.py meta-llama/Llama-2-7b-hf c4 --wbits 4 --quant ldlq --incoh_processing #--groupsize 128
-TRANSFORMERS_CACHE=./model-storage CUDA_VISIBLE_DEVICES=0 python llama.py meta-llama/Llama-2-7b-hf c4 --wbits 2 --quant ldlq --incoh_processing #--groupsize 128
-TRANSFORMERS_CACHE=./model-storage CUDA_VISIBLE_DEVICES=0 python llama.py meta-llama/Llama-2-7b-hf c4 --wbits 1 --quant ldlq --incoh_processing #--groupsize 128
+# TRANSFORMERS_CACHE=./model-storage CUDA_VISIBLE_DEVICES=0 python llama.py meta-llama/Llama-2-7b-hf c4 --wbits 4 --quant ldlq --incoh_processing #--groupsize 128
+# TRANSFORMERS_CACHE=./model-storage CUDA_VISIBLE_DEVICES=0 python llama.py meta-llama/Llama-2-7b-hf c4 --wbits 2 --quant ldlq --incoh_processing #--groupsize 128
+TRANSFORMERS_CACHE=./model-storage CUDA_VISIBLE_DEVICES=0 python llama.py meta-llama/Llama-2-7b-hf c4 --wbits 1 --quant gptq --incoh_processing --groupsize 128
 
 # TRANSFORMERS_CACHE=./model-storage CUDA_VISIBLE_DEVICES=0 python llama.py meta-llama/Llama-2-7b-hf c4 --wbits 2 --true-sequential --act-order --groupsize 128 --eval
 # Benchmark generating a 2048 token sequence with the saved model

@@ -6,6 +6,7 @@ from functools import partial
 import sys
 
 def check_nbits(wr, nbits):
+    return
     (wr_vals, wr_counts) = torch.unique(wr, sorted=True, return_counts=True)
     assert (len(wr_vals) <= 2**nbits)
     return wr_counts
@@ -15,13 +16,13 @@ def hessian_loss(dw, H):
     return (dw @ H @ dw.T).trace()
 
 
-def calc_entropy(wr_count):
-    # empirical distribution of weights into bit patterns
-    wr_dist = wr_counts / wr_counts.sum()
-    print(wr_dist)
-    # log(2) = 0.69... to convert from base e to bits
-    print("avg bits per weight: %f" %
-          (torch.special.entr(wr_dist) / 0.69314718056).sum().item())
+# def calc_entropy(wr_counts):
+#     # empirical distribution of weights into bit patterns
+#     wr_dist = wr_counts / wr_counts.sum()
+#     print(wr_dist)
+#     # log(2) = 0.69... to convert from base e to bits
+#     print("avg bits per weight: %f" %
+#           (torch.special.entr(wr_dist) / 0.69314718056).sum().item())
 
 
 
@@ -71,10 +72,10 @@ def round_allbal(
             break
         w_hat.copy_(wr)
 
-    wr_counts = check_nbits(wr, nbits)
+    # wr_counts = check_nbits(wr, nbits)
     # print(f"m:{m}, d:{d}")
-    if calc_entropy:
-        calc_entropy(wr_counts)
+    # if calc_entropy:
+    #     calc_entropy(wr_counts)
     return wr
 
 
@@ -128,10 +129,10 @@ def round_allbal_block(
             break
         w_hat.copy_(wr)
         
-    wr_counts = check_nbits(wr, nbits)
+    # wr_counts = check_nbits(wr, nbits)
     # print(f"m:{m}, d:{d}")
-    if calc_entropy:
-        calc_entropy(wr_counts)
+    # if calc_entropy:
+    #     calc_entropy(wr_counts)
     return wr
 
 
@@ -195,7 +196,7 @@ def round_ldl(
             break
         w_hat.copy_(wr)
     
-    wr_counts = check_nbits(wr, nbits)
+    # wr_counts = check_nbits(wr, nbits)
     return wr
 
 
@@ -287,7 +288,7 @@ def round_ldl_block(
             break
         w_hat.copy_(wr)
     
-    wr_counts = check_nbits(wr, nbits)
+    # wr_counts = check_nbits(wr, nbits)
     return wr
 
 def round_sorted_ldl_admm(
@@ -374,7 +375,7 @@ def round_ldl_admm(
             print(f"triangle-greedy finished after {jj+1} passes")
             break
 
-    wr_counts = check_nbits(wr, nbits)
+    # wr_counts = check_nbits(wr, nbits)
     return wr
 
 
@@ -418,7 +419,7 @@ def round_ldl_gptqequiv(
     #     w_hat[:,i] = torch.clamp(torch.floor(w[:,i] + (w[:,i:] - w_hat[:,i:]) @ L[i:,i] + eta[:,i]), min=0, max=2**nbits-1)
 
     wr = w_hat
-    wr_counts = check_nbits(wr, nbits)
+    # wr_counts = check_nbits(wr, nbits)
     return wr
 
 

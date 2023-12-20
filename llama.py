@@ -173,6 +173,7 @@ def llama_sequential(model, dataloader, dev, args):
         torch.cuda.empty_cache()
 
         inps, outs = outs, inps
+        print(inps.shape, outs.shape)
 
     model.config.use_cache = use_cache
     # print("errors")
